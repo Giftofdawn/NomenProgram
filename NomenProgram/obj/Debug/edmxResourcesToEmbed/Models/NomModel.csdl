@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NomSPModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="NomSPEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="nomcount_types" EntityType="NomSPModel.nomcount_types" />
+    <EntitySet Name="NomData" EntityType="NomSPModel.NomData" />
+    <AssociationSet Name="FK_NomData_CNT_TYPE" Association="NomSPModel.FK_NomData_CNT_TYPE">
+      <End Role="nomcount_types" EntitySet="nomcount_types" />
+      <End Role="NomData" EntitySet="NomData" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="nomcount_types">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TYPE" Type="String" MaxLength="3" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="NomData" Relationship="NomSPModel.FK_NomData_CNT_TYPE" FromRole="nomcount_types" ToRole="NomData" />
+  </EntityType>
+  <EntityType Name="NomData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="SNAME" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+    <Property Name="FNAME" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+    <Property Name="ITEM_CNT" Type="Int32" />
+    <Property Name="CNT_TYPE" Type="Int32" />
+    <NavigationProperty Name="nomcount_types" Relationship="NomSPModel.FK_NomData_CNT_TYPE" FromRole="NomData" ToRole="nomcount_types" />
+  </EntityType>
+  <Association Name="FK_NomData_CNT_TYPE">
+    <End Type="NomSPModel.nomcount_types" Role="nomcount_types" Multiplicity="0..1" />
+    <End Type="NomSPModel.NomData" Role="NomData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nomcount_types">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NomData">
+        <PropertyRef Name="CNT_TYPE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

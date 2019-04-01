@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="NomSPModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="nomcount_types">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TYPE" Type="nchar" MaxLength="3" />
+  </EntityType>
+  <EntityType Name="NomData">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="SNAME" Type="nchar" MaxLength="20" />
+    <Property Name="FNAME" Type="nchar" MaxLength="50" />
+    <Property Name="ITEM_CNT" Type="int" />
+    <Property Name="CNT_TYPE" Type="int" />
+  </EntityType>
+  <Association Name="FK_NomData_CNT_TYPE">
+    <End Role="nomcount_types" Type="Self.nomcount_types" Multiplicity="0..1" />
+    <End Role="NomData" Type="Self.NomData" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="nomcount_types">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="NomData">
+        <PropertyRef Name="CNT_TYPE" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="NomSPModelStoreContainer">
+    <EntitySet Name="nomcount_types" EntityType="Self.nomcount_types" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="NomData" EntityType="Self.NomData" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_NomData_CNT_TYPE" Association="Self.FK_NomData_CNT_TYPE">
+      <End Role="nomcount_types" EntitySet="nomcount_types" />
+      <End Role="NomData" EntitySet="NomData" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
